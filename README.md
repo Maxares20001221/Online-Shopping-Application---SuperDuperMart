@@ -392,8 +392,8 @@ This project is licensed under the MIT License - see the [LICENSE](Online-Shoppi
 
 **Your Name**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: https://github.com/Maxares20001221
+- Email: maxares1221@gmail.com
 
 ---
 
