@@ -1,0 +1,96 @@
+<div class="order-detail-container" *ngIf="order">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Order Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="order-info">
+        <p><strong>Order ID:</strong> {{ order.orderId }}</p>
+        <p><strong>Date Placed:</strong> {{ formatDate(order.datePlaced) }}</p>
+        <p><strong>Status:</strong> 
+          <span [class]="'status-' + order.orderStatus.toLowerCase()">
+            {{ order.orderStatus }}
+          </span>
+        </p>
+        <p><strong>Total Price:</strong> ${{ order.totalPrice.toFixed(2) }}</p>
+      </div>
+
+      <h3>Order Items</h3>
+      <table mat-table [dataSource]="order.items" class="mat-elevation-z8">
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let item">
+            <a (click)="viewProduct(item.productId)" style="cursor: pointer; color: blue;">
+              {{ item.productName }}
+            </a>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let item">${{ item.price.toFixed(2) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let item">${{ getItemTotal(item).toFixed(2) }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div class="actions" *ngIf="order.orderStatus === 'Processing'">
+        <button mat-raised-button color="warn" (click)="cancelOrder()">
+          <mat-icon>cancel</mat-icon> Cancel Order
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<style>
+.order-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.order-info {
+  margin-bottom: 20px;
+}
+
+.order-info p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.status-completed {
+  color: green;
+  font-weight: bold;
+}
+
+.status-canceled {
+  color: red;
+  font-weight: bold;
+}
+
+.status-processing {
+  color: orange;
+  font-weight: bold;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+</style>
+

@@ -1,0 +1,45 @@
+# Backend
+Online-Shopping-Application-Backend/target/
+Online-Shopping-Application-Backend/.classpath
+Online-Shopping-Application-Backend/.project
+Online-Shopping-Application-Backend/.settings/
+Online-Shopping-Application-Backend/.idea/
+*.iml
+*.log
+
+# Frontend
+Online-Shopping-Application-Frontend/node_modules/
+Online-Shopping-Application-Frontend/dist/
+Online-Shopping-Application-Frontend/.angular/
+Online-Shopping-Application-Frontend/.vscode/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Application configuration (contains sensitive data)
+Online-Shopping-Application-Backend/src/main/resources/application.yaml
+
+# Maven
+Online-Shopping-Application-Backend/.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+

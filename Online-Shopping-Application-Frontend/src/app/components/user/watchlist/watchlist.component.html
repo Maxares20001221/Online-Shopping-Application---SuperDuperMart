@@ -1,0 +1,52 @@
+<mat-card class="mb-20">
+  <mat-card-header>
+    <mat-card-title>Watchlist</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="watchlistItems.length === 0" class="empty-watchlist">
+      <p>Your watchlist is empty</p>
+    </div>
+    <div *ngIf="watchlistItems.length > 0">
+      <table mat-table [dataSource]="watchlistItems" class="mat-elevation-z8">
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef>Product Name</th>
+          <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let item">${{ item.price.toFixed(2) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-raised-button color="warn" (click)="removeFromWatchlist(item.productId)">
+              <mat-icon>delete</mat-icon> Remove
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<style>
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.empty-watchlist {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+table {
+  width: 100%;
+}
+</style>
+

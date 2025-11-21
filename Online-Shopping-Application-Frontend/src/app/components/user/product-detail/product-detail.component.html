@@ -1,0 +1,70 @@
+<div class="product-detail-container" *ngIf="product">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="product-info">
+        <p><strong>Product ID:</strong> {{ product.productId }}</p>
+        <p *ngIf="product.description"><strong>Description:</strong> {{ product.description }}</p>
+        <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+        <p *ngIf="product.stock !== null"><strong>Stock:</strong> {{ product.stock }}</p>
+        <p *ngIf="product.wholesalePrice !== null && product.wholesalePrice !== undefined">
+          <strong>Wholesale Price:</strong> ${{ product.wholesalePrice.toFixed(2) }}
+        </p>
+      </div>
+
+      <div class="quantity-selector">
+        <label>Quantity: </label>
+        <button mat-icon-button (click)="decreaseQuantity()">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span>{{ quantity }}</span>
+        <button mat-icon-button (click)="increaseQuantity()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="addToCart()">
+          <mat-icon>add_shopping_cart</mat-icon> Add to Cart
+        </button>
+        <button mat-raised-button color="accent" (click)="addToWatchlist()">
+          <mat-icon>favorite</mat-icon> Add to Watchlist
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<style>
+.product-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.product-info {
+  margin-bottom: 20px;
+}
+
+.product-info p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.quantity-selector {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions button {
+  margin-right: 10px;
+}
+</style>
+

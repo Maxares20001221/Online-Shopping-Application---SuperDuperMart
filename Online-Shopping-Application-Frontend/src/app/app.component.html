@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <span>SuperDuperMart</span>
+  <span class="spacer"></span>
+  <ng-container *ngIf="authService.isAuthenticated()">
+    <button mat-button *ngIf="!authService.isAdmin()" (click)="navigateToUserHome()">
+      <mat-icon>home</mat-icon> User Home
+    </button>
+    <button mat-button *ngIf="authService.isAdmin()" (click)="navigateToAdminHome()">
+      <mat-icon>admin_panel_settings</mat-icon> Admin Home
+    </button>
+    <button mat-button *ngIf="!authService.isAdmin()" routerLink="/user/products">
+      <mat-icon>shopping_bag</mat-icon> Products
+    </button>
+    <button mat-button *ngIf="authService.isAdmin()" routerLink="/admin/products">
+      <mat-icon>inventory</mat-icon> Product Management
+    </button>
+    <button mat-button *ngIf="authService.isAdmin()" routerLink="/admin/orders">
+      <mat-icon>receipt</mat-icon> Order Management
+    </button>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+<style>
+.spacer {
+  flex: 1 1 auto;
+}
+.container {
+  padding: 20px;
+}
+</style>
+

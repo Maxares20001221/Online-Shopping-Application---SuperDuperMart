@@ -1,0 +1,97 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>{{ isLoginMode ? 'Login' : 'Register' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" *ngIf="isLoginMode">
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="full-width">
+          Login
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" *ngIf="!isLoginMode">
+        <mat-form-field class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required>
+          <mat-error *ngIf="registerForm.get('username')?.hasError('required')">Username is required</mat-error>
+          <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">Username must be at least 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Password must be at least 6 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" required>
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Please confirm password</mat-error>
+          <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch')">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid" class="full-width">
+          Register
+        </button>
+      </form>
+
+      <div class="toggle-mode">
+        <button mat-button color="primary" (click)="toggleMode()">
+          {{ isLoginMode ? 'Need an account? Click here to Register' : 'Already have an account? Click here to Login' }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<style>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.toggle-mode {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.toggle-mode button {
+  font-size: 14px;
+  text-decoration: underline;
+}
+</style>
+

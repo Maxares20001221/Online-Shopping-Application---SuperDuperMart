@@ -1,0 +1,168 @@
+<div class="admin-home-container">
+  <h1>Admin Home</h1>
+
+  <!-- Orders Table -->
+  <mat-card class="mb-20">
+    <mat-card-header>
+      <mat-card-title>All Orders</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+        <ng-container matColumnDef="orderId">
+          <th mat-header-cell *matHeaderCellDef>Order ID</th>
+          <td mat-cell *matCellDef="let order">{{ order.orderId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="datePlaced">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let order">{{ formatDate(order.datePlaced) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="orderStatus">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let order">
+            <span [class]="'status-' + order.orderStatus.toLowerCase()">{{ order.orderStatus }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef>Total Price</th>
+          <td mat-cell *matCellDef="let order">${{ order.totalPrice.toFixed(2) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let order">
+            <button mat-button color="primary" (click)="viewOrder(order.orderId)">
+              <mat-icon>visibility</mat-icon> View
+            </button>
+            <button 
+              mat-button 
+              color="warn" 
+              (click)="cancelOrder(order.orderId)"
+              [disabled]="order.orderStatus !== 'Processing'">
+              <mat-icon>cancel</mat-icon> Cancel
+            </button>
+            <button 
+              mat-button 
+              color="primary" 
+              (click)="completeOrder(order.orderId)"
+              [disabled]="order.orderStatus !== 'Processing'">
+              <mat-icon>check_circle</mat-icon> Complete
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Statistics -->
+  <div class="stats-container">
+    <!-- Most Profitable Product -->
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Most Profitable Product</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="!mostProfitableProduct">No data available</div>
+        <div *ngIf="mostProfitableProduct">
+          <strong>{{ mostProfitableProduct.productName }}</strong>
+          <p>Total Sold: {{ mostProfitableProduct.totalSold }}</p>
+          <p>Total Revenue: ${{ mostProfitableProduct.totalRevenue.toFixed(2) }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Top 3 Popular Products -->
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Top 3 Most Popular Products</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="top3PopularProducts.length === 0">No data available</div>
+        <div *ngFor="let product of top3PopularProducts" class="stat-item">
+          <strong>{{ product.productName }}</strong>
+          <p>Sold: {{ product.totalSold }} | Revenue: ${{ product.totalRevenue.toFixed(2) }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Total Sold Items -->
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Total Successfully Sold Items</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="total-sold">
+          <h2>{{ totalSoldItems }}</h2>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<style>
+.admin-home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.stats-card {
+  height: 100%;
+}
+
+.stat-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.stat-item:last-child {
+  border-bottom: none;
+}
+
+.total-sold {
+  text-align: center;
+  padding: 20px;
+}
+
+.total-sold h2 {
+  font-size: 48px;
+  color: #3f51b5;
+}
+
+.status-completed {
+  color: green;
+  font-weight: bold;
+}
+
+.status-canceled {
+  color: red;
+  font-weight: bold;
+}
+
+.status-processing {
+  color: orange;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
